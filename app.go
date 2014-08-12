@@ -98,14 +98,17 @@ func (a *App) Run(arguments []string) error {
 		return err
 	}
 
+	// show completions if enabled
 	if checkCompletions(context) {
 		return nil
 	}
 
+	// show help if enabled
 	if checkHelp(context) {
 		return nil
 	}
 
+	// show version if enabled
 	if checkVersion(context) {
 		return nil
 	}
@@ -119,9 +122,12 @@ func (a *App) Run(arguments []string) error {
 
 	args := context.Args()
 	if args.Present() {
+		// when there are arguments present, use the first to look up the command
 		name := args.First()
 		c := a.Command(name)
+
 		if c != nil {
+			// run the command
 			return c.Run(context)
 		}
 	}
